@@ -1,45 +1,33 @@
 <div class="container">
-
   <p>
-    <strong>Img:</strong>
-    <%= image_tag @product.current_img, size: "160x90" %>
+    <strong>Code:</strong>
+    <%= @order.code %>
   </p>
 
   <p>
-    <strong>Name:</strong>
-    <%= @product.name %>
+    <strong>Product:</strong>
+    <%= @order.product_id %>
   </p>
 
   <p>
     <strong>Number:</strong>
-    <%= @product.number %>
+    <%= 1 %>
   </p>
 
   <p>
-    <strong>Description:</strong>
-    <span style="word-wrap:break-word;word-break:break-all;"><%= @product.description %></span>
+    <strong>Amount:</strong>
+    <%= @order.amount %>
   </p>
 
   <p>
-    <strong>On shelf:</strong>
-    <%= @product.on_shelf %>
+    <strong>User:</strong>
+    <%= @order.user_id %>
   </p>
 
   <p>
-    <strong>Price:</strong>
-    <%= @product.price %>
+    <strong>Aasm state:</strong>
+    <%= @order.aasm_state %>
   </p>
 
-  <p>
-    <strong>Platform:</strong>
-    <%= @product.platform %>
-  </p>
-
-  <p>
-    <strong>Product category:</strong>
-    <%= @product.product_category_id %>
-  </p>
-
-  <%= link_to 'Edit', edit_product_path(@product) %> |
-  <%= link_to 'Back', products_path %>
+  <%= link_to 'Back', orders_path %>
 </div>
