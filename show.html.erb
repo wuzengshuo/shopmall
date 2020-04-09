@@ -1,0 +1,45 @@
+<div class="container">
+
+  <p>
+    <strong>Img:</strong>
+    <%= image_tag @product.current_img, size: "160x90" %>
+  </p>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @product.name %>
+  </p>
+
+  <p>
+    <strong>Number:</strong>
+    <%= @product.number %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <span style="word-wrap:break-word;word-break:break-all;"><%= @product.description %></span>
+  </p>
+
+  <p>
+    <strong>On shelf:</strong>
+    <%= @product.on_shelf %>
+  </p>
+
+  <p>
+    <strong>Price:</strong>
+    <%= @product.price %>
+  </p>
+
+  <p>
+    <strong>Platform:</strong>
+    <%= @product.platform %>
+  </p>
+
+  <p>
+    <strong>Product category:</strong>
+    <%= @product.product_category_id %>
+  </p>
+
+  <%= link_to 'Edit', edit_product_path(@product) %> |
+  <%= link_to 'Back', products_path %>
+</div>

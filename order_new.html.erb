@@ -1,0 +1,23 @@
+<div class="container">
+  <%= simple_form_for @order, url: order_create_home_index_path do |f| %>
+    <div class="form-inputs">
+      <%= f.input :product_id, input_html: {value: @product.id}, as: :hidden %>
+      <h3><%= @product.name %></h3>
+      <%#= f.input :number %>
+      <%= f.input :amount, input_html: {value: @product.price}, as: :hidden %>
+      <%= f.input :amount, input_html: {value: @product.price}, disabled: true if @product.price.present? %>
+      <%= "<span style='color:#32e696'>It is free</span>".html_safe unless @product.price.present? %>
+      <% if logged_in? %>
+        <%= f.input :user_id, input_html: {value: current_user.id}, as: :hidden %>
+        <%= f.input :contact, input_html: {value: current_user.email}, required: true %>
+      <% else %>
+        <%= f.input :contact, required: true %>
+      <% end %>
+      <%= f.input :aasm_state, input_html: {value: "awaiting_payment"}, as: :hidden %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "order", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

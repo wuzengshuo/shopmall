@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopmall</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+    maximum-scale=1.0, user-scalable=no">
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render file: 'layouts/header' %>
+    <br>
+    <div class="row", style="width:100%;">
+      <%= render file: 'layouts/left_nav' %>
+      <div class="col-9">
+        <%= render file: 'layouts/flash' %>
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

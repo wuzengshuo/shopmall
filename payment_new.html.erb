@@ -1,0 +1,32 @@
+<div class="container">
+  <%= simple_form_for @order, url: payment_create_home_index_path(order_id: params[:order_id]), method: :post do |f| %>
+    <div class="form-inputs">
+      <%= f.input :amount, input_html: {value: @product.price}, disabled: true if @product.price.present? %>
+      <%= f.input :payment_method, required: true %>
+      <%= f.input :bank_code, required: true, input_html: {maxlength: "16"} %>
+      <%= f.input :cv_code, required: true, input_html: {maxlength: "3"} %>
+      <%= f.input :aasm_state, input_html: {value: "awaiting_notice"}, as: :hidden %>
+    </div>
+    <br>
+    <br>
+
+    <div class="form-actions">
+
+    </div>
+  <% end %>
+  <button class="btn btn-primary checkout">Check out</button>
+</div>
+<script>
+  $('.checkout').click(function(){
+    if($('#order_payment_method').val() == ""){
+      alert("please select payment_method!")
+    }else if($('#order_bank_code').val().length != 16){
+      alert("please checkout bank_code length!")
+    }else if($('#order_cv_code').val().length != 3){
+      alert("please checkout cv_code length!")
+    }else{
+      $('form').submit()
+    }
+  })
+
+</script>

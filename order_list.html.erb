@@ -1,0 +1,47 @@
+<div class="container">
+  <h1>My Orders</h1>
+
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th>Code</th>
+        <th>Product name</th>
+        <th>Number</th>
+        <th>Amount</th>
+        <th>User</th>
+        <th>Contact</th>
+        <th>Aasm state</th>
+        <th>Created at</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.code %></td>
+          <td><%= order.product&.name %></td>
+          <td><%= 1 %></td>
+          <td><%= order.amount || "<span style='color:#32e696;'>Free</span>".html_safe %></td>
+          <td><%= order.user&.name || "<span style='color:red;'>tourist</span>".html_safe %></td>
+          <td><%= order.contact %></td>
+          <td>
+            <% if order.aasm_state == "canceled" %>
+            <%= "<span style='color:red;'>canceled</span>".html_safe %>
+            <% elsif order.aasm_state == "already_agree"%>
+            <%= "<span style='color:#32e696;'>already_agree</span>".html_safe %>
+            <% else %>
+              <%= order.aasm_state %>
+            <% end %>
+          </td>
+          <td><%= order.created_at %></td>
+          <td>
+            <% if order.aasm_state.in? ["awaiting_payment", "awaiting_notice"] %>
+              <%= link_to 'Cancel', cancel_order_home_index_path(order_id: order.id), method: :post, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

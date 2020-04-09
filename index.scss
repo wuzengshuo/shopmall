@@ -1,0 +1,26 @@
+.navColor{
+  background-color: #fff;
+  position: sticky;
+  border-bottom: 1px solid #dadfe6;
+}
+.navTitle{
+  color: #ffffff !important;
+  font-size: 30px;
+  font-weight: 30px;
+  text-decoration: none!important;
+}
+label{
+  float: left;
+  font-weight: bold!important;
+}
+input{
+  margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+}
+
+textarea{
+  resize: none;
+  height: 500px;
+  width: 600px;
+}
