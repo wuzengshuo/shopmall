@@ -1,33 +1,124 @@
-<div class="container">
-  <p>
-    <strong>Code:</strong>
-    <%= @order.code %>
-  </p>
+<div>
+  <div class="container" style="text-align:center;border:1;">
+    <div class="row" style="margin: 50px 0px;">
+      <div class="col-md-8">
+        <%= image_tag @product.current_img %>
+      </div>
+      <div class="col-md-4">
+        <h3 style="margin-top:50px;">
+          <%= @product.name %>
+        </h3>
+        <button type="button" class="btn btn-primary btn-lg" style="margin-top: 50%;width:100%" data-toggle="modal" data-target="#exampleModal">
+          book
+        </button>
+      </div>
+    </div>
 
-  <p>
-    <strong>Product:</strong>
-    <%= @order.product_id %>
-  </p>
-
-  <p>
-    <strong>Number:</strong>
-    <%= 1 %>
-  </p>
-
-  <p>
-    <strong>Amount:</strong>
-    <%= @order.amount %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= @order.user_id %>
-  </p>
-
-  <p>
-    <strong>Aasm state:</strong>
-    <%= @order.aasm_state %>
-  </p>
-
-  <%= link_to 'Back', orders_path %>
+    <div class="row" style="margin: 50px 0px;">
+      <div class="col-md-8" style="text-align:left;">
+        <div style="word-wrap:break-word;word-break:break-all;overflow:hidden;color:black;margin: 0px 20px;">
+        <span style="font-size:20px;font-weight:bold;margin-bottom:20px;display:block;">Description</span>
+          <%= simple_format @product.description, style:"line-height: 35px;" %>
+        </div>
+        <div style="word-wrap:break-word;word-break:break-all;overflow:hidden;color:black;margin: 0px 20px;">
+          <span style="font-size:20px;font-weight:bold;margin-bottom:20px;display:block;">Comments List</span>
+          <ul>
+            <% @product.comments.each do |comment| %>
+              <li><%= comment.content %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div style="word-wrap:break-word;word-break:break-all;overflow:hidden;color:black;margin: 0px 20px;">
+        <span style="font-size:20px;font-weight:bold;margin-bottom:20px;display:block;">Comments</span>
+          <input type="text" class="string input-comment">
+          <br>
+          <button class="btn comment-create">commit</button>
+        </div>
+      </div>
+      <div class="col-md-4" style="line-height: 44px;text-align:left;">
+        <div style="font-size:16px;font-weight:bold;margin-bottom:20px;display:block;">Date And Time</div>
+        <div><%= @product.created_at %></div>
+        <div style="margin-top:50px;font-size:16px;font-weight:bold;margin-bottom:20px;display:block;">Location</div>
+        <div><%= @product.location %></div>
+        <div id="googleMap" style="width:100%;height:350px;margin-top:50px;"></div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure order this product?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= @product.name %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <%= link_to "yes", order_new_home_index_path(product_id: @product.id), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.comment-create').click(function(){
+    content = $('.input-comment').val()
+    user_id = <%= current_user&.id %>
+    product_id = <%= @product.id %>
+    $.ajax({
+      url: '/home/comment_create',
+      type: 'post',
+      data: {
+        content: content,
+        user_id: user_id,
+        product_id: product_id
+      },
+      success: function(){
+        $('ul').append(`<li>${content}</li>`);
+      }
+    })
+  })
+
+</script>
+
+<script>
+  <% if Geocoder.search(@product.location).first.present? %>
+    var a = <%= Geocoder.search(@product.location).first.coordinates %>
+  <% else %>
+    var a = <%= Geocoder.search("65 Clifton Street, London").first.coordinates %>
+  <% end %>
+
+  var myCenter= new google.maps.LatLng(a[0],a[1]);
+
+  function initialize()
+  {
+    var mapProp = {
+      center:myCenter,
+      zoom:15,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+      };
+
+    var map= new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+    var marker=new google.maps.Marker({
+      position:myCenter,
+      });
+
+    marker.setMap(map);
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+
+<script>
+  $(document).ready(function() { initialize(); });
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
