@@ -1,0 +1,18 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  name: MyString
+  avatar: MyString
+  phone: MyString
+  email: admin@gmail.com
+  password_digest: $2a$12$iXuzKWXW0Ke/Y2Wvcuu/9uu8PtY1hRdpCE9ugGWJAMYqASR.dwQKe
+  is_admin: true
+
+two:
+  code: MyString
+  name: MyString
+  avatar: MyString
+  phone: MyString
+  email: admin@gmail.com
+  password_digest: $2a$12$iXuzKWXW0Ke/Y2Wvcuu/9uu8PtY1hRdpCE9ugGWJAMYqASR.dwQKe
