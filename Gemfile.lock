@@ -103,7 +103,7 @@ GEM
     execjs (2.7.0)
     ffi (1.11.1)
     flat-ui-rails (0.0.2)
-    geocoder (1.5.2)
+    geocoder (1.6.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     groupdate (4.2.0)
